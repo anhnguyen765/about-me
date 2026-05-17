@@ -13,10 +13,10 @@ export default function Work() {
           <h2>Product Owner - <span style={{ color: "var(--color-accent)" }}>Zalopay</span></h2>
           <p className="structural">NOV 2025 – PRESENT</p>
           <p style={{ marginTop: "1rem" }}>
-            Core Payments & Cross-border Payments. I own product delivery for core payment infrastructure responsible for orchestrating fund flows and transaction processing supporting 2+ million transactions per day.
+            Core Payments & Cross-border Payments. I own product delivery for core payment infrastructure responsible for orchestrating fund flows and transaction processing supporting millions of transactions per day.
           </p>
           <ul style={{ marginTop: "1rem" }}>
-            <li>Manage and prioritise product backlog for 3 engineering squads, balancing system reliability with new features.</li>
+            <li>Manage and prioritise product backlog for multiple engineering squads, balancing system reliability with new features.</li>
             <li>Analyse and identify systemic failure patterns to improve payment success rate.</li>
             <li>Deliver and maintain cross-border payment integrations with Alipay+, Tenpay, and VietQR.</li>
             <li>Incident investigations and root-cause analysis using payment logs.</li>
