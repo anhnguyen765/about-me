@@ -155,8 +155,8 @@ nav a:hover, nav a.active { color: var(--accent); opacity: 1; }
 .gradient-field--hero { width: min(70vw, 870px); height: min(75vw, 820px); right: -8%; top: -15%; opacity: 0.86; filter: blur(26px); background: radial-gradient(ellipse at 22% 55%, rgba(23, 202, 250, 0.84) 0 9%, transparent 32%), radial-gradient(ellipse at 52% 50%, rgba(14, 86, 250, 0.8) 0 17%, transparent 43%), radial-gradient(ellipse at 80% 58%, rgba(149, 176, 255, 0.76) 0 13%, transparent 42%); }
 .gradient-field--feature { width: 440px; height: 310px; right: -100px; bottom: -170px; opacity: 0.32; }
 .home-hero--gradient { position: relative; isolation: isolate; min-height: min(700px, 76vh); display: flex; align-items: center; overflow: hidden; width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); border-bottom: 1px solid var(--line); }
-.hero-content { position: relative; z-index: 1; max-width: min(1120px, 78%); padding: clamp(4rem, 8vw, 7.5rem) var(--content-inset); }
-.hero-title { max-width: 920px; font-size: clamp(3.6rem, 7.6vw, 7.7rem); letter-spacing: -0.06em; }
+.hero-content { position: relative; z-index: 1; width: 100%; max-width: none; padding: clamp(4rem, 8vw, 7.5rem) var(--content-inset); }
+.hero-title { max-width: min(1100px, 100%); font-size: clamp(3.6rem, 7.6vw, 7.7rem); letter-spacing: -0.06em; }
 .hero-title em, .philosophy-section em, .person-section em { color: var(--accent); font-style: italic; }
 .hero-copy { max-width: 540px; color: var(--ink); font-size: clamp(1.08rem, 1.85vw, 1.4rem); }
 .hero-links { display: flex; align-items: center; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.7rem; }
