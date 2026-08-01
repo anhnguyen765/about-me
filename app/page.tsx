@@ -1,68 +1,54 @@
+import Image from "next/image";
+import Link from "next/link";
+import GradientField from "./components/GradientField";
+
+const strengths = ["Payments infrastructure", "Product strategy", "Systems thinking", "Making complexity clear"];
+
 export default function Home() {
   return (
-    <div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "3rem", alignItems: "center", width: "100%" }}>
-        <div style={{ flex: "1 1 400px" }}>
-          <div className="blockquote" style={{ fontSize: "1rem", marginTop: "0", marginBottom: "2rem", borderLeftWidth: "4px" }}>
-            <p style={{ color: "var(--color-accent)" }}>Keeping things clear, simple, and human.</p>
+    <>
+      <section className="home-hero home-hero--gradient" aria-labelledby="home-title">
+        <GradientField variant="hero" />
+        <div className="hero-content">
+          <p className="eyebrow">Anh Nguyen / Product owner</p>
+          <h1 id="home-title" className="hero-title">I build bridges between systems, people, and <em>possibility.</em></h1>
+          <p className="hero-copy">I&apos;m a product owner working on the infrastructure that helps Vietnamese payments move further — while building communities and ideas that help people grow.</p>
+          <div className="hero-links">
+            <Link className="button-link" href="/work">Selected work <span aria-hidden="true">↗</span></Link>
+            <a className="quiet-link" href="mailto:anh.nguyen762005@gmail.com">Start a conversation <span aria-hidden="true">↗</span></a>
           </div>
-          <h3>Hi, I'm Anh.</h3>
-          <p style={{ marginTop: "1rem" }}>
-            I’m a product thinker working at the intersection of payments, infrastructure, and human-centered problem-solving.
-          </p>
-          <ul>
-            <li>Payments infrastructure</li>
-            <li>System design</li>
-            <li>Product strategy</li>
-            <li>Human-centered problem solving</li>
-          </ul>
-          <p style={{ marginTop: "2rem" }}>
-            I currently work as a <strong>Product Owner at Zalopay</strong>, building payment infrastructure and solving large-scale transactional problems.
-          </p>
         </div>
-        <div style={{ flex: "0 0 250px", display: "flex", justifyContent: "center", margin: "0 auto" }}>
-          <img src="/ava.jpeg" alt="Profile" style={{ width: "100%", maxWidth: "250px", borderRadius: "20px" }} />
-        </div>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", alignSelf: "center", justifySelf: "center" }}>
-        <h2>Contact</h2>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-          gap: "1rem"
-        }}>
-          <a href="mailto:anh.nguyen762005@gmail.com" style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            padding: "1.5rem",
-            border: "1px solid rgba(0,0,0,0.1)",
-            borderRadius: "8px",
-            textDecoration: "none",
-            color: "var(--color-primary)"
-          }}>
-            <p className="structural" style={{ marginBottom: "0.5rem", color: "var(--color-accent)" }}>EMAIL</p>
-            <p>anh.nguyen762005@gmail.com</p>
-          </a>
+      </section>
 
-          <a href="https://linkedin.com/in/anh-nguyen76" target="_blank" style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            border: "1px solid rgba(0,0,0,0.1)",
-            borderRadius: "8px",
-            padding: "1.5rem",
-            textDecoration: "none",
-            color: "var(--color-primary)"
-          }}>
-            <p className="structural" style={{ marginBottom: "0.5rem", color: "var(--color-accent)" }}>LINKEDIN</p>
-            <p>anh-nguyen76</p>
-          </a>
-        </div>
+      <section className="strengths-section" aria-labelledby="strengths-title">
+        <p id="strengths-title" className="eyebrow section-label">What I bring</p>
+        <ul className="strength-list">{strengths.map((strength, index) => <li key={strength}><span className="structural">0{index + 1}</span>{strength}</li>)}</ul>
+      </section>
 
-      </div>
-    </div>
+      <section className="featured-work" aria-labelledby="featured-title">
+        <div className="section-heading"><p className="eyebrow">Selected work</p><h2 id="featured-title">Two stories I&apos;m proud to be part of.</h2></div>
+        <article className="feature-story">
+          <p className="structural">01 / Zalopay / Cross-border payments</p>
+          <div><h3>Bringing a Vietnamese wallet to the <span>world.</span></h3><p>Building the infrastructure and partnerships behind cross-border payments — where local trust meets global possibility.</p><Link className="text-link" href="/work">Read the work <span aria-hidden="true">↗</span></Link></div>
+        </article>
+        <article className="feature-story feature-story--projectx">
+          <GradientField variant="feature" />
+          <p className="structural">02 / Project X Vietnam</p>
+          <div><h3>Helping curious people find a place to <span>grow.</span></h3><p>Leading growth, product thinking, and a clearer creative identity for a community building the next generation of problem solvers.</p><Link className="text-link" href="/projects">Explore Project X <span aria-hidden="true">↗</span></Link></div>
+        </article>
+      </section>
+
+      <section className="philosophy-section" aria-labelledby="philosophy-title">
+        <p className="eyebrow">A product philosophy</p>
+        <h2 id="philosophy-title">The best systems make the right thing feel <em>natural.</em></h2>
+        <p>I&apos;m interested in the details people do not see: the constraints, edge cases, and decisions that turn a complicated system into an experience people can trust.</p>
+        <Link className="quiet-link" href="/thinking">Read my notes <span aria-hidden="true">↗</span></Link>
+      </section>
+
+      <section className="person-section" aria-labelledby="person-title">
+        <div className="portrait-wrap"><Image className="portrait" src="/ava.jpeg" alt="Portrait of Anh Nguyen" width={720} height={900} sizes="(max-width: 720px) 100vw, 33vw" /><span className="portrait-note structural">Based in Vietnam · Thinking globally</span></div>
+        <div><p className="eyebrow">Beyond the work</p><h2 id="person-title">A life that keeps the work <em>human.</em></h2><p>From mathematics and teaching to community building, I care about sharing ideas clearly and helping other people find their next step.</p><div className="person-links"><Link className="text-link" href="/about">More about me ↗</Link><Link className="text-link" href="/gallery">A few moments ↗</Link></div></div>
+      </section>
+    </>
   );
 }

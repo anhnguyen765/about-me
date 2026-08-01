@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-body" });
-const jetBrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
-
 export const metadata: Metadata = {
-  title: "Anh Nguyen",
-  description: "Keeping things simple, clear, and human.",
+  title: "Anh Nguyen — Product systems, made human",
+  description: "Anh Nguyen is a product owner working across payments infrastructure, product strategy, and communities that help people grow.",
 };
 
 export default function RootLayout({
@@ -19,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${jetBrainsMono.variable}`}>
+      <body>
         <div className="container">
           <Header />
           <main>{children}</main>

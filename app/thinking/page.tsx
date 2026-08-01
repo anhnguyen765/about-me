@@ -1,12 +1,9 @@
 import MDXRenderer from "../components/MDXRenderer";
+import PageIntro from "../components/PageIntro";
 
-export const metadata = {
-  title: "Thinking — Anh Nguyen",
-};
+export const metadata = { title: "Thinking — Anh Nguyen" };
 
 const latestThinking = `
-### Mình dùng AI trong Fintech ra sao
-
 Có một điều mình để ý rất rõ trong khoảng những năm gần đây: AI không còn là công cụ hỗ trợ, mà đang dần trở thành một lớp hạ tầng cho cách chúng ta suy nghĩ.
 
 Ở vai trò Technical Product Owner trong fintech, mình không dùng AI để viết caption hay thử prompt cho vui. Mình dùng nó trong cách phân tích requirement, mổ xẻ flow nghiệp vụ, review edge case, thậm chí challenge lại solution của chính mình.
@@ -22,33 +19,20 @@ Và mỗi decision đó đều có cost thật:
 - Optimise sai metric → tăng revenue ngắn hạn, giảm trust dài hạn.
 
 Vì vậy, điều mình quan tâm không phải “AI thông minh đến đâu”, mà là: “Mình có đủ tỉnh táo để không giao toàn bộ tư duy của mình cho AI không?”
-
-*Trích đoạn bài viết mới nhất trên Substack.*
 `;
 
 export default function Thinking() {
   return (
-    <div>
-      <h1>Thinking</h1>
-      <p>
-        This section represents my mental models and product thinking. It focuses on problem definition, reasoning process, trade-offs, and final insights.
-      </p>
-      
-      <div style={{ marginTop: "3rem", paddingBottom: "2rem", borderBottom: "1px solid rgba(0,0,0,0.1)" }}>
-        <p className="structural" style={{ marginBottom: "1rem", color: "var(--color-accent)" }}>LATEST ESSAY</p>
+    <>
+      <PageIntro eyebrow="Mental models / notes" title="The thinking behind the work.">
+        <p>A small collection of notes on problem definition, systems, trade-offs, and technology — usually written to make my own thinking a little more precise.</p>
+      </PageIntro>
+      <article className="essay">
+        <p className="eyebrow">Latest essay / Vietnamese</p>
+        <h3>Mình dùng AI trong Fintech ra sao</h3>
         <MDXRenderer source={latestThinking} />
-        
-        <div style={{ marginTop: "2rem" }}>
-          <a 
-            href="https://substack.com/home/post/p-196285345" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            style={{ display: "inline-block", padding: "0.75rem 1.5rem", background: "var(--color-accent)", color: "#fff", fontWeight: 500, borderRadius: "4px", fontSize: "0.9rem" }}
-          >
-            Read the full essay on Substack →
-          </a>
-        </div>
-      </div>
-    </div>
+        <a className="button-link" href="https://substack.com/home/post/p-196285345" target="_blank" rel="noreferrer">Read the full essay <span aria-hidden="true">↗</span></a>
+      </article>
+    </>
   );
 }

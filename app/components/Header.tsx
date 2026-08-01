@@ -7,18 +7,18 @@ export default function Header() {
   const pathname = usePathname();
 
   const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
     { name: "Work", href: "/work" },
     { name: "Projects", href: "/projects" },
-    { name: "Thinking", href: "/thinking" },
-    { name: "Writing", href: "/writing" },
-    { name: "Gallery", href: "/gallery" },
+    { name: "Notes", href: "/thinking" },
+    { name: "About", href: "/about" },
   ];
 
   return (
-    <header>
-      <nav className="structural">
+    <header className="site-header">
+      <Link href="/" className="wordmark" aria-label="Anh Nguyen — home">
+        Anh <span>Nguyen</span>
+      </Link>
+      <nav aria-label="Main navigation">
         {navLinks.map((link) => (
           <Link
             key={link.name}

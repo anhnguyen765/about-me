@@ -1,69 +1,36 @@
-export const metadata = {
-  title: "About — Anh Nguyen",
-};
+import PageIntro from "../components/PageIntro";
+
+export const metadata = { title: "About — Anh Nguyen" };
 
 export default function About() {
   return (
-    <div>
-      <h1>About</h1>
-
-      <p>
-        I grew up in Vietnam until the age of 12 before moving to Australia, attending high school in Melbourne and university in Brisbane.
-      </p>
-
-      <p>
-        I graduated with Distinction from the <strong>Queensland University of Technology</strong> with a Bachelor of Information Technology (Computer Science), minoring in Mathematics and Statistics.
-      </p>
-
-      <p>
-        I have interacted with computers since the age of 2 and developed an early fascination with mathematics. Math was not only a subject but a <strong>way of thinking about structure and logic.</strong>
-      </p>
-
-      <p>
-        This analytical foundation later evolved into product thinking. Two key moments shaped this transition:
-      </p>
-
-      <ol>
-        <li>Working at Project X Vietnam</li>
-        <li>Participating in the H4TF Product Management competition (Champion, 2025)</li>
-      </ol>
-
-      <p>
-        Both experiences emphasised the importance of identifying real problems, designing solutions under constraints, and thinking systematically about users and systems.
-      </p>
-
-      <div style={{ marginTop: "3rem" }}>
-        <h2>Education & Teaching</h2>
-        <p>
-          I have experience as a Peers Learning Facilitator for the STIMulate Program at QUT, supporting students in Statistics, Calculus, Algebra, and coding fundamentals. Explaining complex concepts taught me how people actually learn and how clarity changes understanding. This deeply influences my product communication style today.
-        </p>
-
-        <p>
-          I spent several years tutoring high school mathematics for students preparing for the Victorian Certificate of Education (VCE) and other curriculums in Australia. Teaching math taught me that most struggles come not from difficult concepts, but from poorly framed problems. My role was to identify where understanding broke down and redesign explanations so the logic became intuitive. That mindset carries directly into product management: diagnosing the real problem, simplifying complexity, and designing solutions that make the right path clear for users.
-        </p>
-      </div>
-
-      <div style={{ marginTop: "3rem" }}>
-        <h2>Awards & Recognition</h2>
-        <ul style={{ paddingLeft: "1.25rem" }}>
-          <li>Champion – Heading For The Future: Product Management 2025 (AIESEC Vietnam)</li>
-          <li>2nd Runner-Up – Future Business Analyst Season 5 (RMIT Business & Finance Club)</li>
-          <li>QUT Executive Dean’s Commendation for Academic Excellence</li>
-          <li>QUT International Merit Scholarship</li>
-        </ul>
-      </div>
-
-      <div style={{ marginTop: "3rem" }}>
-        <h2>Contact</h2>
-        <ul style={{ listStyle: "none", paddingLeft: 0, marginTop: "1rem" }}>
-          <li style={{ marginBottom: "0.5rem" }}>
-            Email: <a href="mailto:anh.nguyen762005@gmail.com" style={{ color: "var(--color-accent)" }}>anh.nguyen762005@gmail.com</a>
-          </li>
-          <li>
-            LinkedIn: <a href="https://linkedin.com/in/anh-nguyen76" target="_blank" style={{ color: "var(--color-accent)" }}>linkedin.com/in/anh-nguyen76</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <>
+      <PageIntro eyebrow="A little context" title="I&apos;m drawn to the logic beneath the surface.">
+        <p>My path runs from mathematics and teaching to product work — a through-line of making difficult things easier to understand.</p>
+      </PageIntro>
+      <section className="about-grid">
+        <div className="prose">
+          <p>I grew up in Vietnam until the age of 12, then moved to Australia for high school in Melbourne and university in Brisbane. I graduated with Distinction from <strong>Queensland University of Technology</strong>, studying Computer Science with a minor in Mathematics and Statistics.</p>
+          <p>Computers and mathematics gave me an early love for structure and logic. Over time, that analytical foundation turned into product thinking: finding the real problem, working within constraints, and designing a path that makes sense to people.</p>
+          <p>Project X Vietnam and the Heading For The Future Product Management competition were formative moments. Both taught me that strong solutions start with a precise understanding of users, systems, and trade-offs.</p>
+          <p>Teaching has shaped me just as much. As a peer learning facilitator at QUT and a mathematics tutor, I learned that confusion often comes from a poorly framed problem — not a lack of ability. That lesson stays with me in every product conversation.</p>
+        </div>
+        <aside className="side-note">
+          <p className="eyebrow">Recognition</p>
+          <h3>A few markers along the way</h3>
+          <ul>
+            <li>Champion — Heading For The Future: Product Management, 2025</li>
+            <li>2nd Runner-Up — Future Business Analyst, Season 5</li>
+            <li>QUT Executive Dean&apos;s Commendation for Academic Excellence</li>
+            <li>QUT International Merit Scholarship</li>
+          </ul>
+        </aside>
+      </section>
+      <section className="contact-block" aria-label="Contact Anh">
+        <p className="eyebrow">Keep in touch</p>
+        <a href="mailto:anh.nguyen762005@gmail.com">anh.nguyen762005@gmail.com <span aria-hidden="true">↗</span></a><br />
+        <a href="https://linkedin.com/in/anh-nguyen76" target="_blank" rel="noreferrer">LinkedIn / anh-nguyen76 <span aria-hidden="true">↗</span></a>
+      </section>
+    </>
   );
 }
