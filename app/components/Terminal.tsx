@@ -201,10 +201,7 @@ export default function Terminal() {
     e.preventDefault();
     const input = value.trim();
     setValue("");
-    if (!input) {
-      if (showLanding) dock();
-      return;
-    }
+    if (!input) return;
     const result = exec(input);
     if (showLanding) {
       dock();
@@ -233,8 +230,7 @@ export default function Terminal() {
       cursor.current = Math.max(cursor.current - 1, -1);
       setValue(cursor.current === -1 ? "" : history.current[cursor.current]);
     } else if (e.key === "Escape") {
-      if (showLanding) dock();
-      else setOpen(false);
+      if (!showLanding) setOpen(false);
     }
   }
 
@@ -267,9 +263,6 @@ export default function Terminal() {
                   <b>cd zalopay</b>, <b>learn</b>, <b>demo</b> or <b>jora</b> and press Enter.
                 </p>
                 <PromptInput {...shared} inputRef={landingRef} id="cmd-landing" prompt="~" />
-                <button type="button" className="lp-skip" onClick={dock}>
-                  skip intro ↵
-                </button>
               </div>
             </div>
           </div>

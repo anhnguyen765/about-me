@@ -65,6 +65,8 @@ export default function ProjectXPage() {
         <a href={CONNECT.partnerMail}>Partner with Project X Vietnam →</a>
       </p>
 
+      <Stats items={STATS} />
+
       <section>
         <p className="cmd">ls ./explore <span className="dim"># start here</span></p>
         <GuidedTry steps={STEPS} intro={INTRO} title="project-x — explore" label="Explore Project X" fieldId="cmd-pjx" fallback="ls project-x" />
@@ -93,8 +95,6 @@ export default function ProjectXPage() {
           ))}
         </ul>
       </section>
-
-      <Stats items={STATS} />
 
       <section>
         <p className="cmd">ls ./design</p>

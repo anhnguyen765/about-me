@@ -176,7 +176,7 @@ export const SPEC_SHEET: SpecRow[] = [
   },
   {
     key: "based",
-    value: "Brisbane / HCMC · full Australian work rights",
+    value: "Brisbane / HCMC",
   },
   {
     key: "languages",
