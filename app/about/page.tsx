@@ -1,35 +1,147 @@
-import PageIntro from "../components/PageIntro";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import SkillChips from "../components/SkillChips";
+import { CONTACT, GALLERY, RECOGNITION, SKILLS, SPEC_SHEET, TIMELINE, TOOLS_IN_USE } from "@/lib/content";
 
-export const metadata = { title: "About — Anh Nguyen" };
+export const metadata: Metadata = {
+  title: "About",
+  description: "Background, skills, recognition and contact details.",
+};
 
-export default function About() {
+const FACTS = ["education", "based", "languages", "data", "ai"];
+const skillsFor = (key: string) => SKILLS.find((s) => s.key === key)?.items;
+const timeline = TIMELINE.map((t) => `${t.date}  ${t.message}`);
+
+export default function AboutPage() {
+  const rows = SPEC_SHEET.filter((r) => FACTS.includes(r.key));
+
   return (
     <>
-      <PageIntro eyebrow="A little context" title="I&apos;m drawn to the logic beneath the surface.">
-        <p>My path runs from mathematics and teaching to product work — a through-line of making difficult things easier to understand.</p>
-      </PageIntro>
-      <section className="about-grid">
-        <div className="prose">
-          <p>I grew up in Vietnam until the age of 12, then moved to Australia for high school in Melbourne and university in Brisbane. I graduated with Distinction from <strong>Queensland University of Technology</strong>, studying Computer Science with a minor in Mathematics and Statistics.</p>
-          <p>Computers and mathematics gave me an early love for structure and logic. Over time, that analytical foundation turned into product thinking: finding the real problem, working within constraints, and designing a path that makes sense to people.</p>
-          <p>Project X Vietnam and the Heading For The Future Product Management competition were formative moments. Both taught me that strong solutions start with a precise understanding of users, systems, and trade-offs.</p>
-          <p>Teaching has shaped me just as much. As a peer learning facilitator at QUT and a mathematics tutor, I learned that confusion often comes from a poorly framed problem — not a lack of ability. That lesson stays with me in every product conversation.</p>
+      <p className="crumb">
+        <Link href="/">← ~</Link>
+      </p>
+      <section className="intro about-intro">
+        <div>
+          <p className="cmd">cat about.md</p>
+          <h1>About</h1>
+          <p className="lede">
+            Product person across payments and growth, based between Brisbane
+            and Ho Chi Minh City. I like instruments that make a decision
+            obvious, and I build them when they don’t exist. I write about it on Substack.
+          </p>
         </div>
-        <aside className="side-note">
-          <p className="eyebrow">Recognition</p>
-          <h3>A few markers along the way</h3>
-          <ul>
-            <li>Champion — Heading For The Future: Product Management, 2025</li>
-            <li>2nd Runner-Up — Future Business Analyst, Season 5</li>
-            <li>QUT Executive Dean&apos;s Commendation for Academic Excellence</li>
-            <li>QUT International Merit Scholarship</li>
-          </ul>
-        </aside>
+        <Image
+          className="avatar"
+          src="/ava.jpeg"
+          alt="Portrait of Anh Nguyen"
+          width={160}
+          height={200}
+        />
       </section>
-      <section className="contact-block" aria-label="Contact Anh">
-        <p className="eyebrow">Keep in touch</p>
-        <a href="mailto:anh.nguyen762005@gmail.com">anh.nguyen762005@gmail.com <span aria-hidden="true">↗</span></a><br />
-        <a href="https://linkedin.com/in/anh-nguyen76" target="_blank" rel="noreferrer">LinkedIn / anh-nguyen76 <span aria-hidden="true">↗</span></a>
+
+      <section>
+        <p className="cmd">env</p>
+        <dl className="env">
+          {rows.map((r) => (
+            <div key={r.key}>
+              <dt>{r.key.toUpperCase()}</dt>
+              <dd>
+                {skillsFor(r.key) ? (
+                  <SkillChips items={[...skillsFor(r.key)!]} timeline={timeline} />
+                ) : (
+                  r.value
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section>
+        <p className="cmd">cat awards.txt <span className="dim"># competition decks included</span></p>
+        <ul className="awards">
+          {RECOGNITION.map((r) => (
+            <li key={r.title}>
+              <span className="when">{r.year}</span>
+              <div>
+                <h2>{r.title}</h2>
+                <p>{r.detail}</p>
+                {r.links && (
+                  <p className="decks">
+                    {r.links.map((l) => (
+                      <a
+                        key={l.href}
+                        href={encodeURI(l.href)}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <span className="deck-pdf">PDF</span>
+                        {l.label}
+                        {l.size && <span className="deck-size">{l.size}</span>}
+                      </a>
+                    ))}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <p className="cmd">ls ~/Applications <span className="dim"># what I work in</span></p>
+        <ul className="tools">
+          {TOOLS_IN_USE.map((t) => (
+            <li key={t.name}>
+              <a href={t.href} target="_blank" rel="noreferrer">
+                <Image src={t.src} alt="" width={56} height={56} />
+                <span>
+                  <b>{t.name}</b>
+                  <span className="dim">{t.role}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <p className="cmd">ls ./photos</p>
+        <ul className="strip" aria-label="Photo gallery, scroll sideways">
+          {GALLERY.map((g, i) => (
+            <li key={g.src}>
+              <figure>
+                <div className="strip-img">
+                  <Image
+                    src={g.src}
+                    alt={g.alt}
+                    fill
+                    sizes="240px"
+                    priority={i < 2}
+                  />
+                </div>
+                <figcaption>{g.caption}</figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <p className="cmd">contact --all</p>
+        <p className="other">
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          <a href={CONTACT.substack} target="_blank" rel="noreferrer">
+            substack ↗
+          </a>
+          <a href={CONTACT.linkedin} target="_blank" rel="noreferrer">
+            linkedin ↗
+          </a>
+          <a href={CONTACT.github} target="_blank" rel="noreferrer">
+            github ↗
+          </a>
+        </p>
       </section>
     </>
   );
