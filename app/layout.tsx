@@ -12,14 +12,14 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Anh Nguyen — product, payments & growth",
-    template: "%s · Anh Nguyen",
+    default: "Anh, Product",
+    template: "Anh, %s",
   },
   description:
     "Anh Nguyen works in product at Zalopay and builds the tech talents program at Project X Vietnam.",
   authors: [{ name: "Anh Nguyen" }],
   openGraph: {
-    title: "Anh Nguyen — product, payments & growth",
+    title: "Anh — product, payments & growth",
     description: "Zalopay and Project X Vietnam.",
     type: "website",
   },

@@ -26,10 +26,10 @@ const CONTAINERS = [
     href: "/zalopay",
     image: "the technical one",
     status: "Up 1 year",
-    title: "Payments at scale",
+    title: "Payments at millions scale",
     blurb:
-      "Where I learned how a product behaves when millions of people depend on it: payment core, cross-border, then growth.",
-    tags: ["payments", "cross-border", "growth"],
+      "Payment Core Platform, Cross-border, Growth",
+    tags: ["payments", "cross-border", "growth", "fintech"],
   },
   {
     name: "project-x",
@@ -38,8 +38,8 @@ const CONTAINERS = [
     status: "Up 2 years",
     title: "Building the tech talents program",
     blurb:
-      "Started in Project X Vietnam’s summer fellowship program, and stayed to help build the program and the tech talents it grows.",
-    tags: ["community", "growth", "fellowship"],
+      "Product, Brand, Growth",
+    tags: ["community", "fellowship", "growth", "vietnam"],
   },
 ];
 
@@ -50,14 +50,16 @@ export default function Home() {
         <p className="cmd">whoami</p>
         <h1>Anh Nguyen</h1>
         <p className="lede">
-          <strong>Product is the thing I keep chasing.</strong> I started as
+          <strong>Product is the thing I keep chasing.</strong>
+        </p>
+        <p>
+          I started as
           an engineer, and every step since has been about the same question:
           what makes a product actually work for the people using it?
         </p>
-        <p className="pos">
+        <p>
           Today that means product at Zalopay and building the tech talents
           program at Project X Vietnam, plus a few tools I build for myself.
-          Brisbane / Ho Chi Minh City.
         </p>
       </section>
 

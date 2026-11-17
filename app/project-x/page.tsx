@@ -114,6 +114,12 @@ export default function ProjectXPage() {
           <a href="https://projectxvietnam.org" target="_blank" rel="noreferrer">
             projectxvietnam.org ↗
           </a>
+          <a href="https://facebook.com/techXVn" target="_blank" rel="noreferrer">
+            Facebook ↗
+          </a>
+          <a href="https://www.linkedin.com/company/project-x-vietnam" target="_blank" rel="noreferrer">
+            LinkedIn ↗
+          </a>
           <a href={CONTACT.githubOrg} target="_blank" rel="noreferrer">
             Project-X-Vietnam on GitHub ↗
           </a>

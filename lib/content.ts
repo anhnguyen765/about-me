@@ -120,11 +120,7 @@ export const PROJECT_X_WHY: Why[] = [
   {
     title: "I was a fellow first",
     body: "I joined in 2024 as a fellow, so I know the program from the inside. I stayed to build it for the next cohort.",
-  },
-  {
-    title: "It should outlive any one cohort",
-    body: "The work I’m proudest of is less visible: recruiting the next organising team so the community doesn’t depend on one group of people.",
-  },
+  }
 ];
 
 export const LINKS = {
