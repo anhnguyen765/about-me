@@ -19,6 +19,37 @@ describe("navigation", () => {
     expect(run("cd zalopay/readme.txt", root).lines[0]).toMatch(/not a directory/);
     expect(run("sudo", root).lines[0]).toMatch(/not found/);
   });
+  it("lists the tools first and opens the PO toolkit", () => {
+    const listing = run("ls", root).lines[0];
+    expect(listing.indexOf("jora/")).toBeLessThan(listing.indexOf("zalopay/"));
+    expect(listing).toContain("po-toolkit/");
+    expect(run("cd po-toolkit", root)).toMatchObject({
+      navigate: "/jora#po-toolkit",
+      cwd: "po-toolkit",
+    });
+    expect(run("cat po-toolkit/readme.txt", root).lines.join(" ")).toMatch(
+      /agent skills/,
+    );
+  });
+});
+
+describe("theme", () => {
+  it("returns the theme to apply", () => {
+    expect(run("theme dark", root).theme).toBe("dark");
+    expect(run("theme light", root).theme).toBe("light");
+    expect(run("theme auto", root).theme).toBe("auto");
+    expect(run("theme system", root).theme).toBe("auto");
+  });
+  it("explains usage and rejects unknown modes", () => {
+    expect(run("theme", root).theme).toBeUndefined();
+    expect(run("theme", root).lines[0]).toMatch(/usage/);
+    expect(run("theme neon", root).theme).toBeUndefined();
+    expect(run("theme neon", root).lines[0]).toMatch(/unknown/);
+  });
+  it("tab-completes", () => {
+    expect(complete("th")).toBe("theme");
+    expect(complete("theme d")).toBe("theme dark");
+  });
 });
 
 describe("files", () => {

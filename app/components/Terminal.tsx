@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { CONTACT } from "@/lib/content";
 import { complete, promptLabel, run, WELCOME } from "@/lib/terminal";
 import TermBar, { RunCat } from "./TermBar";
+import { applyTheme } from "./theme";
 
 type Entry = {
   perms: string;
@@ -16,16 +17,18 @@ type Entry = {
 };
 
 const ENTRIES: Entry[] = [
+  { perms: "drwxr-xr-x", name: "jora/", href: "/jora", hint: "my data CLI" },
+  { perms: "drwxr-xr-x", name: "po-toolkit/", href: "/jora#po-toolkit", hint: "agent skills" },
   { perms: "drwxr-xr-x", name: "zalopay/", href: "/zalopay", hint: "payments, the technical one" },
   { perms: "drwxr-xr-x", name: "project-x/", href: "/project-x", hint: "tech talents program" },
-  { perms: "drwxr-xr-x", name: "jora/", href: "/jora", hint: "my own tools" },
   { perms: "drwxr-xr-x", name: "about/", href: "/about", hint: "background" },
-  { perms: "lrwxr-xr-x", name: "substack", href: CONTACT.substack, hint: "writing ↗", external: true },
-  { perms: "lrwxr-xr-x", name: "github", href: CONTACT.github, hint: "code ↗", external: true },
+  { perms: "drwxr-xr-x", name: "writing/", href: "/writing", hint: "essays, synced from Substack" },
+  { perms: "lrwxr-xr-x", name: "substack", href: CONTACT.substack, hint: "the source ↗", external: true },
+  { perms: "lrwxr-xr-x", name: "github", href: CONTACT.github, hint: "public repos ↗", external: true },
 ];
 
 const DOCK_KEY = "anh.docked";
-const CHIPS = ["help", "learn", "demo", "prompt", "jora"];
+const CHIPS = ["help", "learn", "demo", "prompt", "jora", "theme"];
 const idx = (i: number) => ({ "--i": i }) as React.CSSProperties;
 
 function Listing({ pathname, onPick }: { pathname: string; onPick?: () => void }) {
@@ -144,6 +147,28 @@ export default function Terminal() {
     if (open) floatRef.current?.focus();
   }, [open]);
 
+  // Phones: pin the terminal to the visible area so the on-screen keyboard never covers it.
+  useEffect(() => {
+    if (!open) return;
+    const vv = window.visualViewport;
+    const root = document.documentElement;
+    const sync = () => {
+      root.style.setProperty("--vv-h", `${vv ? vv.height : window.innerHeight}px`);
+      root.style.setProperty("--vv-top", `${vv ? vv.offsetTop : 0}px`);
+    };
+    sync();
+    root.dataset.termOpen = "1";
+    vv?.addEventListener("resize", sync);
+    vv?.addEventListener("scroll", sync);
+    return () => {
+      vv?.removeEventListener("resize", sync);
+      vv?.removeEventListener("scroll", sync);
+      delete root.dataset.termOpen;
+      root.style.removeProperty("--vv-h");
+      root.style.removeProperty("--vv-top");
+    };
+  }, [open]);
+
   useEffect(() => {
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight });
   }, [log, open]);
@@ -176,6 +201,7 @@ export default function Terminal() {
     const echoed = [`$ ${input}`, ...result.lines];
     setLog((l) => [...l, ...echoed]);
     if (result.cwd) setCwd(result.cwd);
+    if (result.theme) applyTheme(result.theme);
     if (result.navigate) router.push(result.navigate);
     if (result.open) window.open(result.open, "_blank", "noopener");
     if (result.copy) {

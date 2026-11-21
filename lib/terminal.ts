@@ -42,23 +42,31 @@ try it: open zalopay`,
 Started as a fellow in the summer fellowship program.
 6,000+ tech talents reached (2025) · 85+ mentors · 60+ partner companies
 partner with the program: open partner`,
+  "writing/readme.txt": `Essays on product, tech and AI. Synced from Substack.
+open the list: cd writing   ·   subscribe: open substack`,
   "jora/why.txt": whyText(JORA_WHY),
   "project-x/why.txt": whyText(PROJECT_X_WHY),
-  "jora/readme.txt": `jora · my own tools for product work
-- a data CLI: find the source, run the query, check the result
-- agent skills for recurring product workflows
+  "jora/readme.txt": `jora · my data CLI for product work
+- find the source, run the read-only query, check the result
+- computed answers reach the model, not raw tables
+Private. Described only in general terms.`,
+  "po-toolkit/readme.txt": `PO toolkit · agent skills for recurring product work
+- discovery, prioritisation, requirements, analytics, go-live readiness
+- structured inputs, reviewable drafts, approval before any shared write
 Private. Described only in general terms.`,
   ...Object.fromEntries(
     Object.entries(PROMPTS).map(([k, v]) => [`prompts/${k}`, v]),
   ),
 };
 
-const DIRS = ["about", "jora", "project-x", "prompts", "zalopay"];
+const DIRS = ["jora", "po-toolkit", "zalopay", "project-x", "writing", "about", "prompts"];
 const PAGES: Record<string, string> = {
   about: "/about",
   jora: "/jora",
+  "po-toolkit": "/jora#po-toolkit",
   "project-x": "/project-x",
   zalopay: "/zalopay",
+  writing: "/writing",
 };
 const LINKS: Record<string, string> = {
   substack: CONTACT.substack,
@@ -81,6 +89,8 @@ export type TerminalResult = {
   navigate?: string;
   open?: string;
   copy?: string;
+  /** Switch the site theme: light, dark, or follow the device. */
+  theme?: "light" | "dark" | "auto";
   cwd?: string;
   /** Lines revealed one by one, like a recorded session. */
   stream?: { lines: string[]; delay: number };
@@ -88,7 +98,7 @@ export type TerminalResult = {
 
 export const COMMANDS = [
   "help", "ls", "cd", "pwd", "cat", "grep", "echo",
-  "whoami", "open", "learn", "demo", "prompt", "jora", "clear",
+  "whoami", "open", "learn", "demo", "prompt", "jora", "theme", "clear",
 ];
 
 export const promptLabel = (cwd: string) => (cwd === "~" ? "~" : `~/${cwd}`);
@@ -165,7 +175,8 @@ const LESSONS: { title: string; body: string[] }[] = [
       "These are the same commands engineers use every day.",
       "Next: prompt root-cause   prints a prompt you can paste into any AI assistant.",
       "Or: demo                  watch a short session.",
-      "Or: jora                  try my own data CLI.",
+      "Or: jora                  try my data CLI.",
+      "Or: cd po-toolkit         the agent skills around it.",
     ],
   },
 ];
@@ -194,7 +205,7 @@ const JORA_USAGE = [
 export const WELCOME = [
   "# hi. this terminal is a small playground.",
   "# the site is a folder you can explore: try  ls  or  cat about/readme.txt",
-  "# new to the shell? type  learn  ·  curious about my tools? type  jora",
+  "# new to the shell? type  learn  ·  my own tools: type  jora  or  cd po-toolkit",
 ];
 
 export function run(input: string, ctx: TerminalContext = { cwd: "~" }): TerminalResult {
@@ -213,10 +224,12 @@ export function run(input: string, ctx: TerminalContext = { cwd: "~" }): Termina
           "demo             watch a short session",
           "prompt [name]    sample AI prompts (copies to clipboard)",
           "jora             try my data CLI (illustrative)",
+          "po-toolkit       agent skills for product work (cd po-toolkit)",
           "ls [-l] [dir]    list · pwd  where am i",
           "cd <dir>         move (opens the page too) · cd ~  home",
           "cat <file>       print a file · grep <word> <file>",
           "open <name>      partner | zalopay | substack | github | linkedin | email",
+          "theme [mode]     light | dark | auto (follow your device)",
           "whoami · echo · clear",
         ],
       };
@@ -357,6 +370,18 @@ export function run(input: string, ctx: TerminalContext = { cwd: "~" }): Termina
       return { lines: JORA_USAGE };
     }
 
+    case "theme": {
+      const mode = rest[0]?.toLowerCase();
+      if (mode === "light" || mode === "dark") {
+        return { lines: [`theme: ${mode}`], theme: mode };
+      }
+      if (mode === "auto" || mode === "system") {
+        return { lines: ["theme: auto (follows your device)"], theme: "auto" };
+      }
+      if (!mode) return { lines: ["usage: theme light | dark | auto", "# the ◐ button in the top bar does the same"] };
+      return { lines: [`theme: unknown mode "${rest[0]}". try: light | dark | auto`] };
+    }
+
     case "demo":
       return { lines: [], stream: { lines: DEMO, delay: 650 } };
 
@@ -388,6 +413,7 @@ export function complete(input: string, cwd = "~"): string | null {
 
   if (parts.length === 1) pool = COMMANDS;
   else if (parts[0] === "open") pool = Object.keys(EXTERNAL);
+  else if (parts[0] === "theme") pool = ["light", "dark", "auto"];
   else if (parts[0] === "prompt") pool = Object.keys(PROMPTS).map((p) => p.replace(".md", ""));
   else if (["cd", "ls", "cat", "grep"].includes(parts[0])) {
     const slash = last.lastIndexOf("/");

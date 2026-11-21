@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { CONNECT, CONTACT } from "@/lib/content";
+import { CONNECT, CONTACT, TOOLKITS } from "@/lib/content";
+import { getPosts } from "@/lib/substack";
 
 const CV = [
   {
@@ -20,30 +21,23 @@ const CV = [
   },
 ];
 
-const CONTAINERS = [
+const TOOLS = [
   {
-    name: "zalopay",
-    href: "/zalopay",
-    image: "the technical one",
-    status: "Up 1 year",
-    title: "Payments at millions scale",
-    blurb:
-      "Payment Core Platform, Cross-border, Growth",
-    tags: ["payments", "cross-border", "growth", "fintech"],
+    name: TOOLKITS[0].name,
+    href: "/jora",
+    line: "data CLI: checked analysis before the number lands",
+    tag: "CLI",
   },
   {
-    name: "project-x",
-    href: "/project-x",
-    image: "the fellowship one",
-    status: "Up 2 years",
-    title: "Building the tech talents program",
-    blurb:
-      "Product, Brand, Growth",
-    tags: ["community", "fellowship", "growth", "vietnam"],
+    name: TOOLKITS[1].name,
+    href: "/jora#po-toolkit",
+    line: "agent skills for the recurring product work",
+    tag: "skills",
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const latest = await getPosts(3);
   return (
     <>
       <section className="intro hero">
@@ -59,13 +53,15 @@ export default function Home() {
         </p>
         <p>
           Today that means product at Zalopay and building the tech talents
-          program at Project X Vietnam, plus a few tools I build for myself.
+          program at Project X Vietnam — plus the tools I build for the work
+          itself: <Link href="/jora">jora</Link> and a{" "}
+          <Link href="/jora#po-toolkit">PO toolkit</Link>.
         </p>
       </section>
 
       <section aria-labelledby="cv">
         <p className="cmd" id="cv">
-          git log --oneline  # the chase
+          git log --oneline <span className="dim">  # experience</span>
         </p>
         <ol className="cv">
           {CV.map((r) => (
@@ -78,6 +74,7 @@ export default function Home() {
                 </span>
                 <span className="cv-note">
                   {r.note}{" "}
+                  <Link href={r.href}>details →</Link>{" · "}
                   <a
                     href={r.action.href}
                     {...("external" in r.action
@@ -100,64 +97,65 @@ export default function Home() {
         </p>
       </section>
 
-      <section aria-labelledby="ps">
-        <p className="cmd" id="ps">
-          docker ps <span className="dim">  # where I chase it</span>
+      <section aria-labelledby="tools">
+        <p className="cmd" id="tools">
+          ls ~/tools <span className="dim">  # what I build for the work</span>
         </p>
-        <ul className="containers">
-          {CONTAINERS.map((c) => (
-            <li key={c.name}>
-              <Link href={c.href} className="container">
-                <div className="c-head">
-                  <span className="c-name">{c.name}</span>
-                  <span className="c-status">
-                    <i aria-hidden="true" /> {c.status}
-                  </span>
-                  <span className="c-image">{c.image}</span>
-                </div>
-                <h2>{c.title}</h2>
-                <p>{c.blurb}</p>
-                <div className="c-foot">
-                  <span className="chips">
-                    {c.tags.map((s) => (
-                      <span key={s}>{s}</span>
-                    ))}
-                  </span>
-                  <span className="c-go">
-                    cd {c.name} <span aria-hidden="true">→</span>
-                  </span>
-                </div>
+        <ul className="apps">
+          {TOOLS.map((t) => (
+            <li key={t.name}>
+              <Link href={t.href}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="app-mark" src="/mark.svg" alt="" width={32} height={32} />
+                <span className="app-text">
+                  <b>{t.name}</b>
+                  <span className="dim">{t.line}</span>
+                </span>
+                <span className="app-tag">{t.tag}</span>
+                <span className="app-go" aria-hidden="true">→</span>
               </Link>
             </li>
           ))}
         </ul>
       </section>
 
-      <section aria-labelledby="side">
-        <p className="cmd" id="side">
-          docker ps --filter side-projects
-        </p>
-        <Link href="/jora" className="side">
-          <span className="c-name">jora</span>
-          <span>my own tools: a data CLI and agent skills for product work</span>
-          <span className="c-go">cd jora →</span>
-        </Link>
-      </section>
+      {latest.length > 0 && (
+        <section aria-labelledby="writing">
+          <p className="cmd" id="writing">
+            ls -lt writing/ | head -3 <span className="dim">  # from substack</span>
+          </p>
+          <ul className="posts">
+            {latest.map((p) => (
+              <li key={p.href}>
+                <a href={p.href} target="_blank" rel="noreferrer" className="post">
+                  <time dateTime={p.date}>{p.date}</time>
+                  <span className="post-title">{p.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="more">
+            <Link href="/writing">cd writing → all posts</Link>
+          </p>
+        </section>
+      )}
 
-      <section>
-        <p className="cmd">ls ~/other</p>
+      <section aria-labelledby="other">
+        <p className="cmd" id="other">
+          ls ~/other
+        </p>
         <p className="other">
+          <Link href="/about">about ↗ </Link>
+          <a href={`mailto:${CONTACT.email}`}>email ↗ </a>
           <a href={CONTACT.substack} target="_blank" rel="noreferrer">
             substack ↗
           </a>
-          <Link href="/about">about</Link>
           <a href={CONTACT.github} target="_blank" rel="noreferrer">
             github ↗
           </a>
           <a href={CONTACT.linkedin} target="_blank" rel="noreferrer">
             linkedin ↗
           </a>
-          <a href={`mailto:${CONTACT.email}`}>email</a>
         </p>
       </section>
     </>

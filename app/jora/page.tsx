@@ -4,8 +4,9 @@ import GuidedTry, { type GuidedStep } from "../components/GuidedTry";
 import { JORA_WHY, TOOLKITS } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "jora",
-  description: "Small tools I build for my own product work.",
+  title: "jora & PO toolkit",
+  description:
+    "jora, my data CLI, and the PO toolkit, agent skills for recurring product work.",
 };
 
 const STEPS: GuidedStep[] = [
@@ -26,18 +27,42 @@ export default function JoraPage() {
         <Link href="/">← ~</Link>
       </p>
       <section className="intro">
-        <p className="cmd">docker inspect jora</p>
-        <h1>jora</h1>
+        <p className="cmd">ls ~/tools</p>
+        <h1>
+          jora <span className="dim">&amp; PO toolkit</span>
+        </h1>
         <p className="lede">
-          When the tool I need doesn’t exist, I build it. These are my own
-          working tools for product analysis and recurring product workflows,
-          kept private and described only in general terms.
+          When the tool I need doesn’t exist, I build it. jora is my data CLI;
+          the PO toolkit is the set of agent skills around it. Both are my own
+          working tools, kept private and described only in general terms.
         </p>
       </section>
 
       <section>
         <p className="cmd">jora --try</p>
         <GuidedTry steps={STEPS} intro={INTRO} title="jora — try it" label="Try jora" fieldId="cmd-jora" fallback="jora" />
+      </section>
+
+      <section id="po-toolkit" aria-labelledby="po-toolkit-title">
+        <p className="cmd">cat po-toolkit/readme.txt</p>
+        <h2 id="po-toolkit-title">
+          {TOOLKITS[1].name}{" "}
+          <span className="dim">· {TOOLKITS[1].kicker}</span>
+        </h2>
+        <p className="lede">{TOOLKITS[1].summary}</p>
+        <p className="pos">{TOOLKITS[1].detail}</p>
+        <ul className="chips tool-chips" aria-label="PO toolkit stack">
+          {TOOLKITS[1].stack.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+        <ul className="tool-notes">
+          {TOOLKITS[1].notes.map((note) => (
+            <li key={note}>
+              <span aria-hidden="true">✓</span> {note}
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section>
@@ -54,25 +79,11 @@ export default function JoraPage() {
 
       <section>
         <p className="cmd">cat guarantees.md <span className="dim"># what it promises</span></p>
-        <ul className="learned">
-          {TOOLKITS[0].notes.map((n) => (
+        <ul className="promises">
+          {TOOLKITS[0].notes.map((n, i) => (
             <li key={n}>
-              <h2>{n}</h2>
-            </li>
-          ))}
-        </ul>
-        <p className="pos">Small promises, kept on purpose.</p>
-      </section>
-
-      <section>
-        <p className="cmd">ls ./tools</p>
-        <ul className="learned">
-          {TOOLKITS.map((t) => (
-            <li key={t.id}>
-              <h2>
-                {t.name} <span className="dim">· {t.kicker}</span>
-              </h2>
-              <p>{t.summary}</p>
+              <span className="glyph" aria-hidden="true">{">"}</span>
+              {n}
             </li>
           ))}
         </ul>

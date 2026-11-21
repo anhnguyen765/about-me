@@ -26,8 +26,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fbfbfd",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#0e56fa" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a1128" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -39,7 +42,7 @@ export default function RootLayout({
         <script
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: `try{if(sessionStorage.getItem("anh.docked")==="1")document.documentElement.dataset.docked="1"}catch(e){}`,
+            __html: `try{if(sessionStorage.getItem("anh.docked")==="1")document.documentElement.dataset.docked="1"}catch(e){}try{var t=localStorage.getItem("anh.theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`,
           }}
         />
         <noscript>

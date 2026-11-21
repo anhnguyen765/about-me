@@ -48,6 +48,9 @@ export const TOOLS_IN_USE = [
   { name: "Ghostty", role: "terminal", src: "/tools/ghostty.png", href: "https://ghostty.org" },
   { name: "VS Code", role: "editor", src: "/tools/vscode.png", href: "https://code.visualstudio.com" },
   { name: "Dia", role: "browser", src: "/tools/dia.png", href: "https://www.diabrowser.com" },
+  { name: "Claude", role: "ai agent", src: "/tools/claude.png", href: "https://claude.com/product/claude-code" },
+  { name: "Codex", role: "ai agent", src: "/tools/codex.png", href: "https://openai.com/codex" },
+  { name: "OrbStack", role: "containers", src: "/tools/orbstack.png", href: "https://orbstack.dev" },
 ] as const;
 
 export type SkillItem = { name: string; what: string; slug?: string; kw?: string[] };
@@ -409,10 +412,10 @@ export const TOOLKITS: Toolkit[] = [
       "jora is a local command-line workflow and skill set for product analysis. It scouts the available data sources, runs the query against the right one, and checks the output before a result is allowed into a document. The model gets a computed answer, not a pile of raw tables to guess from.",
     stack: ["Go", "CLI", "data catalogue", "query runner", "checks", "MCP"],
     notes: [
-      "a read-only bridge between the assistant and the data",
-      "credentials never printed",
-      "computed results, not raw exports, reach the model",
-      "offline checks before a number is reused",
+      "It is a read-only bridge, so the assistant can look at the data but never change it.",
+      "Your credentials are never printed, logged or passed to the model.",
+      "The model gets computed results, not raw exports to guess from.",
+      "Offline checks run before a number is reused in a document.",
     ],
   },
   {
