@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Stats from "../components/Stats";
 import GuidedTry, { type GuidedStep } from "../components/GuidedTry";
-import { CONNECT, CONTACT, PROJECT_X_DESIGN, PROJECT_X_WHY } from "@/lib/content";
+import { CONNECT, PROJECT_X_DESIGN, PROJECT_X_WHY } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Project X Vietnam",
@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 };
 
 const STEPS: GuidedStep[] = [
-  { key: "ls project-x", cmd: "ls project-x", title: "Look around", why: "Every folder on this site is a real directory. See what the program holds." },
-  { key: "cat project-x/readme", cmd: "cat project-x/readme.txt", title: "Read it", why: "Print the file: what the program is and what it has reached." },
-  { key: "grep", cmd: "grep mentors project-x/readme.txt", title: "Search it", why: "Pull out only the lines that matter. Same trick engineers use on logs." },
+  { key: "ls project-x", cmd: "ls project-x", title: "Look around", why: "See what the program holds." },
+  { key: "cat project-x/readme", cmd: "cat project-x/readme.txt", title: "Read it", why: "Print what the program is and what it has reached." },
+  { key: "grep", cmd: "grep mentors project-x/readme.txt", title: "Search it", why: "Pull out only the matching lines, as engineers do with logs." },
 ];
 
 const INTRO = [
@@ -32,15 +32,15 @@ const STATS = [
 const THEMES = [
   {
     title: "The program is the product",
-    body: "The fellowship, the curriculum and the community are what people actually experience. Growth only matters if that experience is worth joining.",
+    body: "The fellowship, curriculum and community are what people experience. Growth matters only if that is worth joining.",
   },
   {
     title: "Grow people, not just numbers",
-    body: "I coach a small team to each own a channel, and spend as much time recruiting the next team as running this one.",
+    body: "I coach a small team to own a channel each, and recruit the next team as I run this one.",
   },
   {
     title: "Instrument it early",
-    body: "Look at the whole journey from first impression to application, and let the data argue with our instincts.",
+    body: "Look at the whole journey, from first impression to application, and let data argue with instinct.",
   },
 ];
 
@@ -54,9 +54,8 @@ export default function ProjectXPage() {
         <p className="cmd">docker inspect project-x</p>
         <h1>Project X Vietnam</h1>
         <p className="lede">
-          Where it started: Project X’s summer fellowship program, a
-          non-profit that connects young tech talent with mentors and
-          companies. I joined as a fellow in 2024 and now help build the tech
+          A non-profit connecting young tech talent with mentors and companies.
+          I joined its summer fellowship in 2024 and now help build the tech
           talents program.
         </p>
       </section>
@@ -120,14 +119,11 @@ export default function ProjectXPage() {
           <a href="https://www.linkedin.com/company/project-x-vietnam" target="_blank" rel="noreferrer">
             LinkedIn ↗
           </a>
-          <a href={CONTACT.githubOrg} target="_blank" rel="noreferrer">
-            Project-X-Vietnam on GitHub ↗
-          </a>
         </p>
       </section>
 
       <p className="next">
-        next: <Link href="/about">cd about →</Link>
+        <Link href="/">cd ~</Link>
       </p>
     </>
   );

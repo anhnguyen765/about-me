@@ -1,5 +1,17 @@
+import Image from "next/image";
 import Link from "next/link";
-import { CONNECT, CONTACT, TOOLKITS } from "@/lib/content";
+import SkillChips from "./components/SkillChips";
+import {
+  CONNECT,
+  CONTACT,
+  GALLERY,
+  RECOGNITION,
+  SKILLS,
+  SPEC_SHEET,
+  TIMELINE,
+  TOOLKITS,
+  TOOLS_IN_USE,
+} from "@/lib/content";
 import { getPosts } from "@/lib/substack";
 
 const CV = [
@@ -21,6 +33,10 @@ const CV = [
   },
 ];
 
+const FACTS = ["education", "based", "languages", "data", "ai"];
+const skillsFor = (key: string) => SKILLS.find((s) => s.key === key)?.items;
+const timeline = TIMELINE.map((t) => `${t.date}  ${t.message}`);
+
 const TOOLS = [
   {
     name: TOOLKITS[0].name,
@@ -40,23 +56,42 @@ export default async function Home() {
   const latest = await getPosts(3);
   return (
     <>
-      <section className="intro hero">
-        <p className="cmd">whoami</p>
-        <h1>Anh Nguyen</h1>
-        <p className="lede">
-          <strong>Product is the thing I keep chasing.</strong>
-        </p>
-        <p>
-          I started as
-          an engineer, and every step since has been about the same question:
-          what makes a product actually work for the people using it?
-        </p>
-        <p>
-          Today that means product at Zalopay and building the tech talents
-          program at Project X Vietnam — plus the tools I build for the work
-          itself: <Link href="/jora">jora</Link> and a{" "}
-          <Link href="/jora#po-toolkit">PO toolkit</Link>.
-        </p>
+      <section className="intro hero about-intro" id="about">
+        <div>
+          <p className="cmd">whoami</p>
+          <h1>Anh Nguyen</h1>
+          <p className="lede">
+            <strong>Product is the thing I keep chasing.</strong>
+          </p>
+          <p>
+            I started as an engineer. Every step since asks one question: what
+            makes a product work for the people using it? When the tool I need
+            doesn’t exist, I build it.
+          </p>
+          <p>
+            Today: product at Zalopay, the tech talents program at Project X
+            Vietnam, and my own tools, <Link href="/jora">jora</Link> and a{" "}
+            <Link href="/jora#po-toolkit">PO toolkit</Link>.
+          </p>
+        </div>
+        <figure className="editor">
+          <div className="editor-tab">
+            <span>ava.jpeg</span>
+            <span className="editor-dot" aria-hidden="true" />
+          </div>
+          <Image
+            className="avatar"
+            src="/ava.jpeg"
+            alt="Portrait of Anh Nguyen"
+            width={160}
+            height={200}
+            priority
+          />
+          <figcaption className="editor-status">
+            <span>160×200</span>
+            <span>JPEG</span>
+          </figcaption>
+        </figure>
       </section>
 
       <section aria-labelledby="cv">
@@ -73,8 +108,7 @@ export default async function Home() {
                   <Link href={r.href}>{r.where}</Link>
                 </span>
                 <span className="cv-note">
-                  {r.note}{" "}
-                  <Link href={r.href}>details →</Link>{" · "}
+                  {r.note}{" · "}
                   <a
                     href={r.action.href}
                     {...("external" in r.action
@@ -92,9 +126,6 @@ export default async function Home() {
             </li>
           ))}
         </ol>
-        <p className="more">
-          <Link href="/about">cat about.md → full background</Link>
-        </p>
       </section>
 
       <section aria-labelledby="tools">
@@ -114,6 +145,25 @@ export default async function Home() {
                 <span className="app-tag">{t.tag}</span>
                 <span className="app-go" aria-hidden="true">→</span>
               </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="apps-in-use">
+        <p className="cmd" id="apps-in-use">
+          ls ~/Applications <span className="dim">  # what I work in</span>
+        </p>
+        <ul className="tools">
+          {TOOLS_IN_USE.map((t) => (
+            <li key={t.name}>
+              <a href={t.href} target="_blank" rel="noreferrer">
+                <Image src={t.src} alt="" width={56} height={56} />
+                <span>
+                  <b>{t.name}</b>
+                  <span className="dim">{t.role}</span>
+                </span>
+              </a>
             </li>
           ))}
         </ul>
@@ -140,13 +190,67 @@ export default async function Home() {
         </section>
       )}
 
+
+      <section aria-labelledby="env">
+        <p className="cmd" id="env">env</p>
+        <dl className="env">
+          {SPEC_SHEET.filter((r) => FACTS.includes(r.key)).map((r) => (
+            <div key={r.key}>
+              <dt>{r.key.toUpperCase()}</dt>
+              <dd>
+                {skillsFor(r.key) ? (
+                  <SkillChips items={[...skillsFor(r.key)!]} timeline={timeline} />
+                ) : (
+                  r.value
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section aria-labelledby="awards">
+        <p className="cmd" id="awards">cat awards.txt</p>
+        <ul className="awards-short">
+          {RECOGNITION.map((r) => (
+            <li key={r.title}>
+              <span className="when">{r.year}</span>
+              <span>
+                {r.title}
+                {r.links?.map((l) => (
+                  <span key={l.href}>{" · "}
+                  <a href={encodeURI(l.href)} target="_blank" rel="noreferrer">
+                    {l.label}
+                  </a> ↗ </span>
+                ))}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="photos">
+        <p className="cmd" id="photos">ls ./photos</p>
+        <ul className="strip" aria-label="Photo gallery, scroll sideways">
+          {GALLERY.map((g) => (
+            <li key={g.src}>
+              <figure>
+                <div className="strip-img">
+                  <Image src={g.src} alt={g.alt} fill sizes="240px" />
+                </div>
+                <figcaption>{g.caption}</figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <section aria-labelledby="other">
         <p className="cmd" id="other">
           ls ~/other
         </p>
         <p className="other">
-          <Link href="/about">about ↗ </Link>
-          <a href={`mailto:${CONTACT.email}`}>email ↗ </a>
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
           <a href={CONTACT.substack} target="_blank" rel="noreferrer">
             substack ↗
           </a>

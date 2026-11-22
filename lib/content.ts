@@ -10,7 +10,6 @@ export const CONTACT = {
   email: "anh.nguyen762005@gmail.com",
   linkedin: "https://linkedin.com/in/anh-nguyen76",
   github: "https://github.com/anhnguyen765",
-  githubOrg: "https://github.com/Project-X-Vietnam",
   essay:
     "https://substack.com/home/post/p-196285345",
   substack: "https://anhnguyen765.substack.com",
@@ -53,9 +52,9 @@ export const TOOLS_IN_USE = [
   { name: "OrbStack", role: "containers", src: "/tools/orbstack.png", href: "https://orbstack.dev" },
 ] as const;
 
-export type SkillItem = { name: string; what: string; slug?: string; kw?: string[] };
+export type SkillItem = { name: string; what: string; slug?: string; kw?: string[]; href?: string };
 
-/** Shown as logo chips in /about's .env block. `what` is a public one-line definition;
+/** Shown as logo chips in the home page's env block. `what` is a public one-line definition;
  *  the popover cross-checks each against the career timeline, so claims stay honest. */
 export const SKILLS: { key: string; items: SkillItem[] }[] = [
   {
@@ -77,18 +76,16 @@ export const SKILLS: { key: string; items: SkillItem[] }[] = [
       { name: "PySpark", slug: "apachespark", what: "the Python API for Apache Spark, for distributed data processing." },
       { name: "Presto", slug: "presto", what: "a distributed SQL engine for querying large datasets." },
       { name: "GA4", slug: "googleanalytics", what: "Google Analytics 4, event-based analytics for web and apps." },
-      { name: "Cohort & funnel analysis", kw: ["cohort", "funnel"], what: "following groups of users and where they drop off." },
-      { name: "Hypothesis testing", kw: ["hypothesis"], what: "checking whether a difference is real or noise." },
     ],
   },
   {
     key: "ai",
     items: [
-      { name: "Agents", kw: ["agent", "agents"], what: "LLMs that take steps with tools, not just answer questions." },
-      { name: "Agent skills", kw: ["agent skills"], what: "packaged, reusable instructions an agent can follow." },
-      { name: "MCP", what: "Model Context Protocol, a standard way to connect assistants to tools and data." },
-      { name: "LLM workflows", kw: ["llm"], what: "chaining model calls into a repeatable process." },
-      { name: "Human-in-the-loop", kw: ["human-in-the-loop"], what: "a person reviews and approves before anything is final." },
+      { name: "Agents", href: "/jora", kw: ["agent", "agents"], what: "LLMs that take steps with tools, not just answer questions." },
+      { name: "Agent skills", href: "/jora#po-toolkit", kw: ["agent skills"], what: "packaged, reusable instructions an agent can follow." },
+      { name: "MCP", href: "/jora", what: "Model Context Protocol, a standard way to connect assistants to tools and data." },
+      { name: "LLM workflows", href: "/jora#po-toolkit", kw: ["llm"], what: "chaining model calls into a repeatable process." },
+      { name: "Human-in-the-loop", href: "/jora#po-toolkit", kw: ["human-in-the-loop"], what: "a person reviews and approves before anything is final." },
     ],
   },
 ];
@@ -98,31 +95,31 @@ export type Why = { title: string; body: string };
 /** Draft "why" copy, built from facts already on the site. Edit freely. */
 export const JORA_WHY: Why[] = [
   {
-    title: "A number travels further than the analysis behind it",
-    body: "Once a figure lands in a document, people reuse it. Checking it afterwards is too late, so jora puts the check before the number is written down.",
+    title: "A number travels further than its analysis",
+    body: "People reuse a figure once it lands in a document. So jora checks it before it is written down.",
   },
   {
     title: "An assistant should get answers, not tables",
-    body: "Hand a model raw tables and it will guess. I wanted it to receive a computed, checked result instead.",
+    body: "A model handed raw tables guesses. jora gives it a computed, checked result.",
   },
   {
     title: "The safe path should be the easy path",
-    body: "Read-only by default, credentials never printed, a confirm step before any write. Trust comes from what the tool makes hard to get wrong.",
+    body: "Read-only by default, no credentials printed, a confirm step before any write.",
   },
   {
     title: "If the tool doesn’t exist, build it",
-    body: "I’d rather spend an afternoon on the instrument than another week arguing from numbers I can’t trust.",
+    body: "An afternoon on the tool beats a week of arguing from numbers I can’t trust.",
   },
 ];
 
 export const PROJECT_X_WHY: Why[] = [
   {
     title: "Access is the scarce thing",
-    body: "Young tech talent can learn a skill almost anywhere. What’s rare is time with people who have shipped the thing being taught, which is what the program is built around.",
+    body: "Talent can learn a skill almost anywhere. What’s rare is time with people who have shipped it. The program is built around that.",
   },
   {
     title: "I was a fellow first",
-    body: "I joined in 2024 as a fellow, so I know the program from the inside. I stayed to build it for the next cohort.",
+    body: "I joined in 2024 as a fellow and stayed to build it for the next cohort.",
   }
 ];
 
@@ -171,7 +168,7 @@ export const SPEC_SHEET: SpecRow[] = [
   {
     key: "education",
     value:
-      "Bachelor of Information Technology — Computer Science; minor in Mathematics & Statistics — QUT, 2023–2025 · graduated with Distinction",
+      "CompSci, Maths & Stats · QUT",
   },
   {
     key: "based",
@@ -184,7 +181,7 @@ export const SPEC_SHEET: SpecRow[] = [
   {
     key: "data",
     value:
-      "PySpark · Presto · GA4 · cohort & funnel analysis · hypothesis testing",
+      "PySpark · Presto · GA4",
   },
   {
     key: "ai",
@@ -407,15 +404,15 @@ export const TOOLKITS: Toolkit[] = [
     name: "jora",
     kicker: "local data CLI · analysis, checked",
     summary:
-      "The instrument I reach for before an analysis: find the right source, run the query, check the result, then write the number down.",
+      "Find the right source, run the query, check the result, then write the number down.",
     detail:
-      "jora is a local command-line workflow and skill set for product analysis. It scouts the available data sources, runs the query against the right one, and checks the output before a result is allowed into a document. The model gets a computed answer, not a pile of raw tables to guess from.",
+      "A local command-line tool for product analysis. It finds the data source, runs the query, and checks the output before a result goes into a document.",
     stack: ["Go", "CLI", "data catalogue", "query runner", "checks", "MCP"],
     notes: [
-      "It is a read-only bridge, so the assistant can look at the data but never change it.",
-      "Your credentials are never printed, logged or passed to the model.",
-      "The model gets computed results, not raw exports to guess from.",
-      "Offline checks run before a number is reused in a document.",
+      "Read-only: the assistant can look at data but never change it.",
+      "Credentials are never printed, logged or sent to the model.",
+      "The model gets computed results, not raw exports.",
+      "Offline checks run before a number is reused.",
     ],
   },
   {
@@ -423,9 +420,9 @@ export const TOOLKITS: Toolkit[] = [
     name: "PO toolkit",
     kicker: "agent skills · product operations",
     summary:
-      "A set of agent skills for the recurring work of a product owner: discovery, prioritisation, requirements, analytics and go-live readiness.",
+      "Agent skills for a product owner’s recurring work: discovery, prioritisation, requirements, analytics, go-live readiness.",
     detail:
-      "The toolkit turns recurring product workflows into structured, reviewable steps. Each skill takes a defined input, produces a draft a human can inspect, and stops before any shared document changes. The point is not to remove the product owner; it is to make the routine parts consistent and leave the judgement where it belongs.",
+      "Each skill takes a defined input, drafts something a human can inspect, and stops before any shared document changes. It makes routine work consistent and leaves the judgement to the owner.",
     stack: [
       "agent skills",
       "LLM workflows",
@@ -521,40 +518,29 @@ export const METRICS = {
 
 export type Recognition = {
   title: string;
-  detail: string;
   year: string;
-  links?: { label: string; href: string; size?: string }[];
+  links?: { label: string; href: string }[];
 };
 
 export const RECOGNITION: Recognition[] = [
   {
-    title: "Winner — Heading For The Future: Product Management",
-    detail: "Project X Vietnam. Both competition decks are public.",
+    title: "Winner, Heading For The Future: Product Management",
     year: "2025",
     links: [
-      { label: "Final round · Infina", href: LINKS.heading2025Final, size: "9.8 MB" },
-      { label: "Round 2 · Weshare", href: LINKS.heading2025Round2, size: "4.2 MB" },
+      { label: "final deck", href: LINKS.heading2025Final },
+      { label: "round 2 deck", href: LINKS.heading2025Round2 },
     ],
   },
   {
-    title: "2nd Runner-Up — Future Business Analyst",
-    detail: "Season 5. Simpồ FinInnovate, rounds two and three.",
+    title: "2nd runner-up, Future Business Analyst",
     year: "2025",
     links: [
-      { label: "Round 2", href: LINKS.finnovate2, size: "6.0 MB" },
-      { label: "Round 3", href: LINKS.finnovate3, size: "18.7 MB" },
+      { label: "round 2 deck", href: LINKS.finnovate2 },
+      { label: "round 3 deck", href: LINKS.finnovate3 },
     ],
   },
-  {
-    title: "QUT Executive Dean’s Commendation",
-    detail: "Academic excellence.",
-    year: "2025",
-  },
-  {
-    title: "QUT International Merit Scholarship",
-    detail: "Undergraduate scholarship.",
-    year: "2023–2025",
-  },
+  { title: "QUT Executive Dean’s Commendation", year: "2025" },
+  { title: "QUT International Merit Scholarship", year: "2023–2025" },
 ];
 
 export const GALLERY = [

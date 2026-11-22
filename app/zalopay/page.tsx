@@ -18,27 +18,27 @@ const ROLES = [
   {
     when: "Sep 2026 – now",
     title: "Product Strategist, Growth & Retention",
-    note: "Working out which levers really move paying-user growth.",
+    note: "Finding the levers that move paying-user growth.",
   },
   {
     when: "Nov 2025 – Sep 2026",
     title: "Product Owner, Payment Core & Cross-Border",
-    note: "The payment infrastructure behind local and cross-border payments.",
+    note: "Payment infrastructure for local and cross-border payments.",
   },
 ];
 
 const THEMES = [
   {
     title: "Reliability is the product",
-    body: "At this scale, a slow or failed payment is the experience. A lot of the work is making the unglamorous paths trustworthy.",
+    body: "At this scale a slow or failed payment is the experience. Much of the work is making the unglamorous paths trustworthy.",
   },
   {
     title: "Systems, not features",
-    body: "Local wallets, global networks and risk checks all have to agree. I try to see the whole path before changing a part of it.",
+    body: "Wallets, global networks and risk checks all have to agree. I look at the whole path before changing a part.",
   },
   {
     title: "Measure, then decide",
-    body: "Growth is the same discipline: model the gap, then back the lever that can actually close it.",
+    body: "Model the gap, then back the lever that can close it.",
   },
 ];
 
@@ -52,9 +52,8 @@ export default function ZalopayPage() {
         <p className="cmd">docker inspect zalopay</p>
         <h1>Zalopay</h1>
         <p className="lede">
-          The technical chapter: a payments product used by millions, where
-          small decisions in the system show up as real moments for real
-          people.
+          A payments product used by millions, where small system decisions
+          show up as real moments for real people.
         </p>
       </section>
 
@@ -112,7 +111,7 @@ export default function ZalopayPage() {
       </section>
 
       <p className="next">
-        next: <Link href="/project-x">cd project-x →</Link>
+        <Link href="/">cd ~</Link>
       </p>
     </>
   );

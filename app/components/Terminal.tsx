@@ -21,8 +21,7 @@ const ENTRIES: Entry[] = [
   { perms: "drwxr-xr-x", name: "po-toolkit/", href: "/jora#po-toolkit", hint: "agent skills" },
   { perms: "drwxr-xr-x", name: "zalopay/", href: "/zalopay", hint: "payments, the technical one" },
   { perms: "drwxr-xr-x", name: "project-x/", href: "/project-x", hint: "tech talents program" },
-  { perms: "drwxr-xr-x", name: "about/", href: "/about", hint: "background" },
-  { perms: "drwxr-xr-x", name: "writing/", href: "/writing", hint: "essays, synced from Substack" },
+    { perms: "drwxr-xr-x", name: "writing/", href: "/writing", hint: "essays, synced from Substack" },
   { perms: "lrwxr-xr-x", name: "substack", href: CONTACT.substack, hint: "the source ↗", external: true },
   { perms: "lrwxr-xr-x", name: "github", href: CONTACT.github, hint: "public repos ↗", external: true },
 ];
@@ -109,6 +108,7 @@ export default function Terminal() {
   const timers = useRef<number[]>([]);
 
   const [docked, setDocked] = useState(false);
+  const [ready, setReady] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const [open, setOpen] = useState(false);
   const [big, setBig] = useState(false);
@@ -140,8 +140,8 @@ export default function Terminal() {
   }, []);
 
   useEffect(() => {
-    if (showLanding) landingRef.current?.focus();
-  }, [showLanding]);
+    if (showLanding && ready) landingRef.current?.focus();
+  }, [showLanding, ready]);
 
   useEffect(() => {
     if (open) floatRef.current?.focus();
@@ -271,26 +271,51 @@ export default function Terminal() {
           aria-label="Welcome terminal"
         >
           <div className="lp-inner">
-            <p className="lp-id">
-              Anh Nguyen <span>product person</span>
-            </p>
-            <div className="lp-term">
-              <TermBar>
-                <span className="term-size">80×24</span>
-              </TermBar>
-              <p className="ls-cmd" aria-hidden="true">
-                <span className="ls-prompt">~ $</span>{" "}
-                <span className="ls-typed">ls -l</span>
+            <div className="lp-why">
+              <p>
+                <b>Why a terminal?</b> Most people only open one if they are
+                developers. I think that wall is mostly habit, not difficulty.
               </p>
-              <Listing pathname={pathname} onPick={dock} />
-              <div className="ls-hint">
-                <p className="ls-legend">
-                  <b>d</b> folder · <b>l</b> link. Click a row, or type{" "}
-                  <b>cd zalopay</b>, <b>learn</b>, <b>demo</b> or <b>jora</b> and press Enter.
-                </p>
-                <PromptInput {...shared} inputRef={landingRef} id="cmd-landing" prompt="~" />
-              </div>
+              <p>
+                I like sharing what I know, so I put it where you can try the
+                terminal safely. Nothing you type can break anything.
+              </p>
+              {!ready && (
+                <button type="button" className="lp-cta" onClick={() => setReady(true)}>
+                  try now →
+                </button>
+              )}
             </div>
+            {ready && (
+              <>
+                <p className="lp-id">
+                  Anh Nguyen <span>product person</span>
+                </p>
+                <div className="lp-term">
+                  <TermBar>
+                    <span className="term-size">80×24</span>
+                  </TermBar>
+                  <p className="ls-cmd" aria-hidden="true">
+                    <span className="ls-prompt">~ $</span>{" "}
+                    <span className="ls-typed">ls -l</span>
+                  </p>
+                  <Listing pathname={pathname} onPick={dock} />
+                  <div className="ls-hint">
+                    <p className="ls-legend">
+                      Type <b>cd ~</b> and press Enter to open the main page. Or
+                      click a row.
+                    </p>
+                    <PromptInput
+                      {...shared}
+                      inputRef={landingRef}
+                      id="cmd-landing"
+                      prompt="~"
+                      placeholder="cd ~"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}

@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 };
 
 const STEPS: GuidedStep[] = [
-  { key: "jora scout", cmd: "jora scout", title: "Scout", why: "Find the right source before writing a single query." },
-  { key: "jora run", cmd: "jora run --by device", title: "Run", why: "A read-only query. Nothing is exported, no credentials on screen." },
-  { key: "jora check", cmd: "jora check", title: "Check", why: "Verify the result before a number is allowed into a document." },
+  { key: "jora scout", cmd: "jora scout", title: "Scout", why: "Find the right source before writing a query." },
+  { key: "jora run", cmd: "jora run --by device", title: "Run", why: "A read-only query. Nothing exported, no credentials shown." },
+  { key: "jora check", cmd: "jora check", title: "Check", why: "Verify the result before it reaches a document." },
 ];
 
 const INTRO = [
-  "# illustrative: no real data. three small steps, in order.",
+  "# illustrative, no real data. three steps, in order.",
   "# tap the highlighted command, or type it.",
 ];
 
@@ -32,9 +32,8 @@ export default function JoraPage() {
           jora <span className="dim">&amp; PO toolkit</span>
         </h1>
         <p className="lede">
-          When the tool I need doesn’t exist, I build it. jora is my data CLI;
-          the PO toolkit is the set of agent skills around it. Both are my own
-          working tools, kept private and described only in general terms.
+          jora is my data CLI. The PO toolkit is the set of agent skills around
+          it. Both are private, so I describe them only in general terms.
         </p>
       </section>
 
@@ -90,7 +89,7 @@ export default function JoraPage() {
       </section>
 
       <p className="next">
-        next: <Link href="/about">cd about →</Link>
+        <Link href="/">cd ~</Link>
       </p>
     </>
   );

@@ -20,8 +20,8 @@ export default async function WritingPage() {
         <p className="cmd">curl -s anhnguyen765.substack.com/feed | head</p>
         <h1>Writing</h1>
         <p className="lede">
-          I’m exploring something, in product, tech, AI, and maybe myself. This list
-          pulls from my Substack, so new posts show up here on their own.
+          Notes on product, tech, AI, and maybe myself. Pulled from my Substack,
+          so new posts appear on their own.
         </p>
       </section>
 
@@ -55,6 +55,10 @@ export default async function WritingPage() {
           </a>
         </p>
       </section>
+
+      <p className="next">
+        <Link href="/">cd ~</Link>
+      </p>
     </>
   );
 }

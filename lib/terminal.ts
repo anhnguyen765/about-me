@@ -61,7 +61,7 @@ Private. Described only in general terms.`,
 
 const DIRS = ["jora", "po-toolkit", "zalopay", "project-x", "writing", "about", "prompts"];
 const PAGES: Record<string, string> = {
-  about: "/about",
+  about: "/#about",
   jora: "/jora",
   "po-toolkit": "/jora#po-toolkit",
   "project-x": "/project-x",

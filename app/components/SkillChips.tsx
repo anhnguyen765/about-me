@@ -3,9 +3,10 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+import Link from "next/link";
 import TermBar from "./TermBar";
 
-export type Skill = { name: string; what: string; slug?: string; kw?: string[] };
+export type Skill = { name: string; what: string; slug?: string; kw?: string[]; href?: string };
 
 const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -131,6 +132,13 @@ export default function SkillChips({
               hits.map((h) => <p key={h} className="tl tl-ok">{h}</p>)
             ) : (
               <p className="tl tl-note">(no matches in the timeline)</p>
+            )}
+            {skill.href && (
+              <p className="tl">
+                <Link href={skill.href} onClick={() => setActive(null)}>
+                  see it in my jora &amp; PO toolkit work →
+                </Link>
+              </p>
             )}
           </div>
         </div>,
