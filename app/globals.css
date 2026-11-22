@@ -650,3 +650,6 @@ main > section > h1 + .lede, main > section > h2 + .lede { margin-top: -2px; }
 .editor .avatar { display: block; width: 100%; height: auto; border-radius: 0; }
 .editor-status { display: flex; justify-content: space-between; gap: 10px; padding: 6px 10px; border-top: 1px solid var(--p-line); }
 @media (max-width: 640px) { .editor { order: -1; width: 120px; } .editor .avatar { width: 100%; } }
+
+.tw-rest { color: transparent; }
+.tw-caret { display: inline-block; width: 2px; height: 1.05em; margin: 0 1px -0.15em; background: #d6ff3d; animation: blink 1s steps(1) infinite; }

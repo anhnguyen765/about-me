@@ -97,6 +97,69 @@ function lineClass(text: string) {
   return "tl";
 }
 
+type Part = { t: string; b?: boolean };
+const WHY: Part[][] = [
+  [
+    { t: "Why a terminal?", b: true },
+    { t: " Most people only open one if they are developers. I think that wall is mostly habit, not difficulty." },
+  ],
+  [{ t: "I like sharing what I know, so I put it where you can try the terminal safely. Nothing you type can break anything." }],
+];
+const TYPE_MS = 18;
+const TOTAL = WHY.flat().reduce((n, p) => n + p.t.length, 0);
+let offset = 0;
+const STARTS: number[][] = WHY.map((parts) =>
+  parts.map((p) => {
+    const at = offset;
+    offset += p.t.length;
+    return at;
+  }),
+);
+
+/** Types the narrative out. The untyped rest stays in the layout (transparent), so nothing jumps. */
+function TypedWhy() {
+  const [n, setN] = useState(0);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setN(TOTAL);
+      return;
+    }
+    const id = window.setInterval(() => {
+      setN((v) => {
+        if (v >= TOTAL) {
+          window.clearInterval(id);
+          return v;
+        }
+        return v + 1;
+      });
+    }, TYPE_MS);
+    return () => window.clearInterval(id);
+  }, []);
+
+  return (
+    <>
+      {WHY.map((parts, i) => (
+        <p key={i}>
+          {parts.map((part, j) => {
+            const from = STARTS[i][j];
+            const shown = Math.max(0, Math.min(part.t.length, n - from));
+            const typing = n >= from && n < from + part.t.length;
+            const Tag = part.b ? "b" : "span";
+            return (
+              <Tag key={j}>
+                {part.t.slice(0, shown)}
+                {typing && <span className="tw-caret" aria-hidden="true" />}
+                <span className="tw-rest">{part.t.slice(shown)}</span>
+              </Tag>
+            );
+          })}
+        </p>
+      ))}
+    </>
+  );
+}
+
 export default function Terminal() {
   const router = useRouter();
   const pathname = usePathname();
@@ -272,14 +335,7 @@ export default function Terminal() {
         >
           <div className="lp-inner">
             <div className="lp-why">
-              <p>
-                <b>Why a terminal?</b> Most people only open one if they are
-                developers. I think that wall is mostly habit, not difficulty.
-              </p>
-              <p>
-                I like sharing what I know, so I put it where you can try the
-                terminal safely. Nothing you type can break anything.
-              </p>
+              <TypedWhy />
               {!ready && (
                 <button type="button" className="lp-cta" onClick={() => setReady(true)}>
                   try now →
