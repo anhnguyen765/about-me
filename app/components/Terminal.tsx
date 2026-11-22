@@ -117,8 +117,12 @@ const STARTS: number[][] = WHY.map((parts) =>
 );
 
 /** Types the narrative out. The untyped rest stays in the layout (transparent), so nothing jumps. */
-function TypedWhy() {
+function TypedWhy({ onDone }: { onDone: () => void }) {
   const [n, setN] = useState(0);
+
+  useEffect(() => {
+    if (n >= TOTAL) onDone();
+  }, [n, onDone]);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -172,6 +176,8 @@ export default function Terminal() {
 
   const [docked, setDocked] = useState(false);
   const [ready, setReady] = useState(false);
+  const [typed, setTyped] = useState(false);
+  const finishTyping = useCallback(() => setTyped(true), []);
   const [leaving, setLeaving] = useState(false);
   const [open, setOpen] = useState(false);
   const [big, setBig] = useState(false);
@@ -335,9 +341,13 @@ export default function Terminal() {
         >
           <div className="lp-inner">
             <div className="lp-why">
-              <TypedWhy />
+              <TypedWhy onDone={finishTyping} />
               {!ready && (
-                <button type="button" className="lp-cta" onClick={() => setReady(true)}>
+                <button
+                  type="button"
+                  className={`lp-cta${typed ? " is-in" : ""}`}
+                  onClick={() => setReady(true)}
+                >
                   try now →
                 </button>
               )}
